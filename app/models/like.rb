@@ -4,5 +4,5 @@ class Like < ApplicationRecord
 end
 
 def update_likes_counter
-  self.post.update(likes_counter: self.post.likes.count)
+  post.update(likes_counter: post.likes.count)
 end
