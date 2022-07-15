@@ -1,2 +1,35 @@
-<h1>Posts#show</h1>
-<p>Here is a post for a given user based on post_id</p>
+<h1><%= @post.title %></h1>
+<div><em>
+  by
+  <%= link_to user_path(@post.user) do %>
+    <%= @post.user.name-%>
+  <% end %>
+  |
+  <%= render partial: "likes/like_button", locals: { like: Like.new, user: @post.user, post: @post } %>
+  |
+  <span><%= @post.comments_counter || 0 %> Comments</span>
+</em></div>
+<p><%= @post.text %></p>
+
+<hr />
+
+<div class="comments-wrapper">
+  <h3>Comments:</h3>
+  <% if @post.comments.empty? %>
+    <p>There no comment so far!</p>
+  <% end %>
+  <% @post.comments.each do |comment| %>
+    <div class="comment-card">
+      <strong>
+        <%= link_to user_path(comment.user) do %>
+          <%= comment.user.name %>
+        <% end %>
+        :
+      </strong>
+      <%= comment.text %>
+    </div>
+  <% end %>
+
+  <h3>Add new comment:</h3>
+  <%= render partial: "comments/comment_form", locals: { comment: Comment.new, user: @post.user, post: @post } %>
+</div>
