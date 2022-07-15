@@ -11,6 +11,14 @@
   </head>
 
   <body>
+    <main>
     <%= yield %>
+    </main>
+
+    <div id="flashes">
+      <% flash.each do |name, msg| -%>
+        <%= render partial: "others/flash", locals: {name: name, msg: msg} %>
+      <% end -%>
+    </div>
   </body>
 </html>
