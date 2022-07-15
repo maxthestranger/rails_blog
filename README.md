@@ -1,24 +1,67 @@
-# README
+![](https://img.shields.io/badge/Microverse-blueviolet)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Rails Blog Project
 
-Things you may want to cover:
+> The Blog app will be a classic example of a blog website. You will create a fully functional website that will show the list of posts and empower readers to interact with them by adding comments and liking posts.
 
-* Ruby version
+## Built With
 
-* System dependencies
+- Ruby
+- Rails
+- Rubocop, Rspecs, Style Lint
 
-* Configuration
+## Live Demo (if available)
 
-* Database creation
+[Live Demo Link](https://livedemo.com)
 
-* Database initialization
+## Getting Started
 
-* How to run the test suite
+To get a local copy up and running follow these simple example steps.
 
-* Services (job queues, cache servers, search engines, etc.)
+### Prerequisites
 
-* Deployment instructions
+- ruby and rails
+- node js
 
-* ...
+### Setup
+
+- clone repo
+- cd into repo
+- bundle install
+- npm install
+
+### Usage
+
+- rails s
+
+### Run tests
+
+### Deployment
+
+## Authors
+
+👤 **Author1**
+
+- GitHub: [@maxthestranger](https://github.com/maxthestranger)
+- Twitter: [@maxthestranger](https://twitter.com/maxthestranger)
+- LinkedIn: [maxthestranger](https://linkedin.com/in/maxthestranger)
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](../../issues/).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## Acknowledgments
+
+- Hat tip to anyone whose code was used
+- Inspiration
+- etc
+
+## 📝 License
+
+This project is [MIT](./MIT.md) licensed.
