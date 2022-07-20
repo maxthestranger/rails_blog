@@ -1,35 +1,45 @@
+
 require 'rails_helper'
-require 'helpers/create_test_models'
+require 'helpers/models_helper'
 
-RSpec.describe 'Users index page', type: :system do
-  before(:all) do
-    @username1 = 'Tom'
-    @user1 = create_user(@username1)
-  end
+feature 'User Index' do
+  background do
+    @name1 = 'user1'
+    @user1 = create_and_activate_user(@name1)
+    @name2 = 'user2'
+    @user2 = create_and_activate_user(@name2)
 
-  it 'Shows the static text' do
     visit users_path
-    expect(page).to have_content('Here is the list of all Users')
   end
 
-  it 'Shows username of user' do
+  scenario 'shows username of all the users' do
+    expect(page).to have_content @name1
+    expect(page).to have_content @name2
+  end
+
+  scenario 'shows photos of all the users' do
+    expect(page).to have_css "img[src='#{@name1}.jpg']"
+    expect(page).to have_css "img[src='#{@name2}.jpg']"
+  end
+
+  scenario 'shows zero posts if users have no posts' do
+    expect(page).to have_content 'Number of posts: 0'
+  end
+
+  scenario 'shows number of posts if users have posts' do
+    @user1.posts_counter = 1
+    @user2.posts_counter = 5
+    [@user1, @user2].each(&:save)
+
     visit users_path
-    expect(page).to have_content(@username1)
+
+    expect(page).to have_content 'Number of posts: 0'
+    expect(page).to have_content 'Number of posts: 0'
   end
 
-  it 'shows the profile picture of user' do
-    visit user_path(id: @user1.id)
-    find("img[src='https://www.example.com/image']")
-  end
+  scenario 'gets redirected to user page after click on it' do
+    click_link @name1
 
-  it 'shows number of user posts ' do
-    visit users_path
-    expect(page).to have_content('Number of posts: 0')
-  end
-
-  it 'takes user to user show page' do
-    visit users_path
-    click_on @username1
-    expect(page).to have_content 'Tom\'s Most Recent Posts'
+    expect(page).to have_current_path(user_path(@user1))
   end
 end

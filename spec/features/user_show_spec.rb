@@ -1,17 +1,16 @@
 require 'rails_helper'
-require 'helpers/create_test_models'
 require 'helpers/models_helper'
 
 RSpec.describe 'Users Show page', type: :feature do
   before do
     @username1 = 'Tom'
-    @user1 = create_user(@username1)
+    @user1 = create_and_activate_user(@username1)
     create_posts_for_user(@user1, count: 4)
     visit user_path(id: @user1.id)
   end
 
   it 'shows the profile picture of a user' do
-    find("img[src='https://www.example.com/image']")
+    find("img[src='#{@username1}.jpg']")
   end
 
   it 'Shows the static text' do
@@ -27,7 +26,7 @@ RSpec.describe 'Users Show page', type: :feature do
   end
 
   it 'shows number of user bio' do
-    expect(page).to have_content('Teacher from Kenya')
+    expect(page).to have_content("Bio of #{@username1}")
   end
 
   it 'shows a post title' do
