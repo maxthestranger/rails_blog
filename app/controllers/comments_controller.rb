@@ -4,6 +4,11 @@ class CommentsController < ApplicationController
     render json: post.comments
   end
 
+  def new
+    @comment = Comment.new
+    render :new
+  end
+
   def create
     comment_author = current_user
     post = Post.find(params[:post_id])
