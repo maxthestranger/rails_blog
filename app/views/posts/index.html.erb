@@ -5,5 +5,5 @@ This user doesn't have any post yet!
 <% end %>
 
 <% @posts.each do |post| %>
-  <%= render partial: 'post_card', locals: { post: post, comments: post.recent_five_comments} %>
+  <%= render partial: 'post_card', locals: { post: post, comments: post.recent_5_comments} %>
 <% end %>
