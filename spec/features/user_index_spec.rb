@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 require 'helpers/models_helper'
 
