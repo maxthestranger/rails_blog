@@ -1,25 +1,33 @@
 class LikesController < ApplicationController
   def create
-    @post = Post.includes(:user).find(params[:post_id])
-    @post_author = @post.user
+    @user = Current.user
+    @post = Post.includes(:author).find(params[:post_id])
 
-    @the_user = current_user
+    @already_liked = Like.where(author: @user, post: @post)
+    destroy && return if @already_liked.present?
 
-    @liked_posts_by_this_user = Like.where(user: @the_user, post: @post)
+    @like = Like.create(likes_params)
+    @like.author = @user
+    @like.post = @post
 
-    destroy && return if @liked_posts_by_this_user.present?
-
-    new_like = Like.create(user: @the_user, post: @post)
-
-    return unless new_like.save
-
-    flash[:notice] = 'You liked this post.'
-    redirect_back_or_to user_post_url(@post_author, @post)
+    if @like.save
+      redirect_back_or_to user_post_path(@post.author, @post), notice: 'Successfully liked post.'
+    else
+      flash[:alert] = 'Something went wrong'
+    end
   end
 
   def destroy
-    @liked_posts_by_this_user.destroy_all
-    flash[:notice] = 'You removed your like from this post.'
-    redirect_back_or_to user_post_url(@post_author, @post)
+    @like = Current.user.likes.last
+    @like.destroy
+    @post = @like.post
+    flash[:notice] = 'You unliked this post.'
+    redirect_back_or_to user_post_path(@post.author, @post)
+  end
+
+  private
+
+  def likes_params
+    params.permit(:author_id, :id)
   end
 end

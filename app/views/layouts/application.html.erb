@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RailsBlog</title>
+    <title>CommunityBlog</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <main>
+  <%= render partial: "shared/navbar" %>
+  <div class="container">
+    <%= render partial: "shared/flash" %>
     <%= yield %>
-    </main>
-
-    <div id="flashes">
-      <% flash.each do |name, msg| -%>
-        <%= render partial: "others/flash", locals: {name: name, msg: msg} %>
-      <% end -%>
-    </div>
+  </div>
   </body>
 </html>

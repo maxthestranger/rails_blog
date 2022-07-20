@@ -1,9 +1,8 @@
-<h1>List of users</h1>
+<h1>Here is the list of all Users</h1>
 
 <div class="users-list">
-  <% @users.each do |user| %>
-    <%= link_to user do %>
-      <%= render partial: "user_card", locals: { user: user } %>
+    <% @users.order(posts_counter: :DESC).each do |user| %>
+        <%= render partial: "shared/user/user_header", locals: { user: user } %>
     <% end %>
-  <% end %>
 </div>
+

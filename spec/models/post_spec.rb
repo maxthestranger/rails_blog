@@ -1,87 +1,73 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  let(:the_author) { User.create!(name: 'Omid', photo: 'https://via.placeholder.com/150', bio: 'Some text as bio!', posts_counter: 0) }
-  let(:the_post) do
-    Post.new(
-      user: the_author,
-      title: 'The post title', text: 'the body of the post',
-      comments_counter: 0, likes_counter: 0
-    )
+  let(:user1) { User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Kenya.', posts_counter: 0) }
+  let(:user2) { User.create(name: 'Lilly', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Kenya.', posts_counter: 0) }
+  let(:post) do
+    Post.create(author: user1, title: 'Hello', text: 'This is my first post', likes_counter: 0, comments_counter: 0)
   end
-  let(:comment1) { Comment.new(user: the_author, post: the_post, text: 'c1') }
-  let(:comment2) { Comment.new(user: the_author, post: the_post, text: 'c2') }
-  let(:comment3) { Comment.new(user: the_author, post: the_post, text: 'c3') }
-  let(:comment4) { Comment.new(user: the_author, post: the_post, text: 'c4') }
-  let(:comment5) { Comment.new(user: the_author, post: the_post, text: 'c5') }
-  let(:comment6) { Comment.new(user: the_author, post: the_post, text: 'c6') }
-
-  context 'post.title' do
-    it 'has some value' do
-      the_post.title = nil
-      expect(the_post).to_not be_valid
-    end
-
-    it 'is not blank' do
-      the_post.title = '    '
-      expect(the_post).to_not be_valid
-    end
-
-    it 'cannot be longer than 250 characters' do
-      the_post.title = 'a' * 251
-      expect(the_post).to_not be_valid
-    end
-
-    it 'accepts "The post title"' do
-      the_post.title = 'The post title'
-      expect(the_post).to be_valid
-    end
+  let(:comment1) { Comment.create(post:, author: user2, text: 'Hi Tom!') }
+  let(:comment2) { Comment.create(post:, author: user1, text: 'Hi Lilly!') }
+  let(:comment3) { Comment.create(post:, author: user2, text: 'I am doing great just learning Ruby') }
+  let(:comment4) do
+    Comment.create(post:, author: user1, text: 'That is awesome, I am also learning Ruby')
   end
+  let(:comment5) do
+    Comment.create(post:, author: user2, text: 'We should do pair programming some time')
+  end
+  let(:comment6) { Comment.create(post:, author: user1, text: 'Great, I will send you my schedule') }
 
-  context 'post.comments_counter' do
-    it 'has some value' do
-      the_post.comments_counter = nil
-      expect(the_post).to_not be_valid
+  context 'title' do
+    it 'is not valid with a name less than 3 characters' do
+      post.title = 'M'
+      expect(post).to_not be_valid
     end
 
-    it 'is integer' do
-      the_post.comments_counter = 1.2
-      expect(the_post).to_not be_valid
+    it 'is must not be blank' do
+      post.title = nil
+      expect(post).to_not be_valid
     end
 
-    it 'accpets 0 and 10' do
-      [0, 10].each do |counter|
-        the_post.comments_counter = counter
-        expect(the_post).to be_valid
-      end
+    it 'is valid with a name of more than 3 characters' do
+      expect(post).to be_valid
+    end
+
+    it 'is invalid if longer 250 characters' do
+      post.title = 'a' * 251
+      expect(post).to_not be_valid
     end
   end
 
-  context 'post.likes_counter' do
-    it 'has some value' do
-      the_post.likes_counter = nil
-      expect(the_post).to_not be_valid
+  context '.comments_counter' do
+    it 'is not valid if comments_counter is not equal or greater than 0' do
+      post.comments_counter = nil
+      expect(post).to_not be_valid
     end
 
-    it 'is integer' do
-      the_post.likes_counter = 1.2
-      expect(the_post).to_not be_valid
-    end
-
-    it 'accpets 0 and 10' do
-      [0, 10].each do |counter|
-        the_post.likes_counter = counter
-        expect(the_post).to be_valid
-      end
+    it 'is valid if comments_counter equal or greater than 0' do
+      expect(post).to be_valid
     end
   end
 
-  context 'post.recent_5_comments' do
-    it 'returns empty list if there is no comments' do
-      expect(the_post.recent_5_comments).to eq []
+  context '.likes_counter' do
+    it 'is not valid if likes_counter is not equal or greater than 0' do
+      post.likes_counter = nil
+      expect(post).to_not be_valid
     end
 
-    it 'returns recent five comments in right order' do
+    it 'is valid if likes_counter equal or greater than 0' do
+      expect(post).to be_valid
+    end
+  end
+
+  context 'last_five_comments method' do
+    it 'returns an empty array if post has not comments' do
+      posts_comments = post.last_five_comments
+      expected = []
+      expect(posts_comments).to eq(expected)
+    end
+
+    it 'returns the last five comments of a post' do
       comment1.save!
       comment2.save!
       comment3.save!
@@ -89,16 +75,9 @@ RSpec.describe Post, type: :model do
       comment5.save!
       comment6.save!
 
-      the_post.reload
-      actual_comments = the_post.recent_5_comments.pluck(:text)
-      expected_comments = [
-        comment6.text,
-        comment5.text,
-        comment4.text,
-        comment3.text,
-        comment2.text
-      ]
-      expect(actual_comments).to eq expected_comments
+      comments = post.last_five_comments.pluck(:text)
+      expected = [comment6.text, comment5.text, comment4.text, comment3.text, comment2.text]
+      expect(comments).to eq(expected)
     end
   end
 end

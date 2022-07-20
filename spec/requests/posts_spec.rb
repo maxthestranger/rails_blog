@@ -1,33 +1,41 @@
 require 'rails_helper'
 
 RSpec.describe 'Posts', type: :request do
+  let!(:user) { User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Kenya.', posts_counter: 0) }
+  let!(:post) do
+    Post.create(author: user, title: 'Hello', text: 'This is my first post', likes_counter: 0, comments_counter: 0)
+  end
+
   describe 'GET /index' do
-    before(:example) { get '/users/1/posts' }
-    it 'respond with 200 code' do
+    before { @posts = post }
+    before(:example) { get user_posts_path(user.id) }
+
+    it 'is a success' do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'renders index view' do
+    it "renders 'index' template" do
       expect(response).to render_template(:index)
     end
 
-    # it 'renders correct content' do
-    #   expect(response.body).to include('Posts of a given user')
-    # end
+    it 'displays correct content in the view' do
+      expect(response.body).to include('Tom\'s Posts')
+    end
   end
 
   # describe 'GET /show' do
-  #   before(:example) { get '/users/1/posts/2' }
-  #   it 'respond with 200 code' do
+  #   before(:example) { get user_post_path(user.id, post) }
+
+  #   it 'is a success' do
   #     expect(response).to have_http_status(:ok)
   #   end
 
-  #   it 'renders show view' do
+  #   it "renders 'show' template" do
   #     expect(response).to render_template(:show)
   #   end
 
-  #   it 'renders correct content' do
-  #     expect(response.body).to include('Specific post of a user')
+  #   it 'displays correct content in the view' do
+  #     expect(response.body).to include('Hello')
   #   end
   # end
 end
