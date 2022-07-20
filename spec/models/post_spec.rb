@@ -9,7 +9,7 @@ RSpec.describe Post, type: :model do
       comments_counter: 0, likes_counter: 0
     )
   end
-  let(:comment2) { Comment.new(user: the_author, post: the_post, text: 'c1') }
+  let(:comment1) { Comment.new(user: the_author, post: the_post, text: 'c1') }
   let(:comment2) { Comment.new(user: the_author, post: the_post, text: 'c2') }
   let(:comment3) { Comment.new(user: the_author, post: the_post, text: 'c3') }
   let(:comment4) { Comment.new(user: the_author, post: the_post, text: 'c4') }
@@ -82,7 +82,7 @@ RSpec.describe Post, type: :model do
     end
 
     it 'returns recent five comments in right order' do
-      comment2.save!
+      comment1.save!
       comment2.save!
       comment3.save!
       comment4.save!

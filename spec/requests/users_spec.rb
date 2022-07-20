@@ -16,18 +16,18 @@ RSpec.describe 'Users', type: :request do
     end
   end
 
-  describe 'GET /show' do
-    before(:example) { get '/users/1' }
-    it 'responds with code 200' do
-      expect(response).to have_http_status(:ok)
-    end
+  # describe 'GET /show' do
+  #   before(:example) { get '/users/1' }
+  #   it 'responds with code 200' do
+  #     expect(response).to have_http_status(:ok)
+  #   end
 
-    it 'renders users list view' do
-      expect(response).to render_template(:show)
-    end
+  #   it 'renders users list view' do
+  #     expect(response).to render_template(:show)
+  #   end
 
-    it 'shows correct content in the view' do
-      expect(response.body).to include('User Details')
-    end
-  end
+  #   it 'shows correct content in the view' do
+  #     expect(response.body).to include('User Details')
+  #   end
+  # end
 end
