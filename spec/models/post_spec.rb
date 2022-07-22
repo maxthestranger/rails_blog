@@ -2,12 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Post, type: :model do
   let(:user) { User.create!(name: 'Max', photo: 'https://avatars3.githubusercontent.com/u/1234?s=460&v=4', bio: 'This is just a test bio', posts_counter: 0) }
-  let(:post) { user.post.create!(title: 'Test Post', text: 'This is just a test post', comments_counter: 0, likes_counter: 0) }
-  let(:comment1) { post.comment.create!(text: 'This is just a test comment 1', user: user) }
-  let(:comment2) { post.comment.create!(text: 'This is just a test comment 2', user: user) }
-  let(:comment3) { post.comment.create!(text: 'This is just a test comment 3', user: user) }
-  let(:comment4) { post.comment.create!(text: 'This is just a test comment 4', user: user) }
-  let(:comment5) { post.comment.create!(text: 'This is just a test comment 5', user: user) }
+  let(:post) do
+    user.post.create!(title: 'Test Post', text: 'This is just a test post', comments_counter: 0, likes_counter: 0)
+  end
+  let(:comment1) { post.comment.create!(text: 'This is just a test comment 1', user:) }
+  let(:comment2) { post.comment.create!(text: 'This is just a test comment 2', user:) }
+  let(:comment3) { post.comment.create!(text: 'This is just a test comment 3', user:) }
+  let(:comment4) { post.comment.create!(text: 'This is just a test comment 4', user:) }
+  let(:comment5) { post.comment.create!(text: 'This is just a test comment 5', user:) }
 
   it 'is valid with valid attributes' do
     expect(post).to be_valid

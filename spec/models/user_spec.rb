@@ -54,16 +54,26 @@ RSpec.describe User, type: :model do
   end
 
   describe '#three_recent_posts' do
-    let(:user) { User.create!(
-      name: 'Max',
-      photo: 'https://avatars3.githubusercontent.com/u/1234?s=460&v=4',
-      bio: 'This is just a test bio',
-      posts_counter: 0
-    ) }
-    let(:post1) { Post.new(title: 'Test Post 1', user: user, text: 'This is just a test post 1', comments_counter: 0, likes_counter: 0) }
-    let(:post2) { Post.new(title: 'Test Post 2', user: user, text: 'This is just a test post 2', comments_counter: 0, likes_counter: 0) }
-    let(:post3) { Post.new(title: 'Test Post 3', user: user, text: 'This is just a test post 3', comments_counter: 0, likes_counter: 0) }
-    let(:post4) { Post.new(title: 'Test Post 4', user: user, text: 'This is just a test post 4', comments_counter: 0, likes_counter: 0) }
+    let(:user) do
+      User.create!(
+        name: 'Max',
+        photo: 'https://avatars3.githubusercontent.com/u/1234?s=460&v=4',
+        bio: 'This is just a test bio',
+        posts_counter: 0
+      )
+    end
+    let(:post1) do
+      Post.new(title: 'Test Post 1', user:, text: 'This is just a test post 1', comments_counter: 0, likes_counter: 0)
+    end
+    let(:post2) do
+      Post.new(title: 'Test Post 2', user:, text: 'This is just a test post 2', comments_counter: 0, likes_counter: 0)
+    end
+    let(:post3) do
+      Post.new(title: 'Test Post 3', user:, text: 'This is just a test post 3', comments_counter: 0, likes_counter: 0)
+    end
+    let(:post4) do
+      Post.new(title: 'Test Post 4', user:, text: 'This is just a test post 4', comments_counter: 0, likes_counter: 0)
+    end
 
     it 'return nothing if there are no posts' do
       expect(user.three_recent_posts).to be_empty
