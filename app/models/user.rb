@@ -4,6 +4,6 @@ class User < ApplicationRecord
   has_many :like, dependent: :destroy
 
   def three_recent_posts
-    Post.includes(:user).limit(3).order(created_at: :desc)
+    post.includes(:user).order(created_at: :DESC).limit(3)
   end
 end

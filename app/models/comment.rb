@@ -2,8 +2,9 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
 
-  def update_comments_counter
-    comment_count = Comment.includes(:post).count()
-    Post.update(comments_counter: comment_count)
+  after_save :update_comment_counter
+
+  def update_comment_counter
+    post.update(comments_counter: post.comment.count)
   end
 end
