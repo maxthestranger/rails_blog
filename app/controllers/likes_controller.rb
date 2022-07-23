@@ -18,7 +18,7 @@ class LikesController < ApplicationController
 
   def destroy
     @liked_posts.destroy_all
-    flash[:notice] = "Likes deleted successfully!"
+    flash[:notice] = 'Likes deleted successfully!'
     redirect_back_or_to user_post_path(@post_author, @post)
   end
 end
