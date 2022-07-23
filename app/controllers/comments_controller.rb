@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        flash[:notice] = "Comment created successfully!"
+        flash[:notice] = 'Comment created successfully!'
         redirect_to user_post_path(post_author, post)
       end
     end

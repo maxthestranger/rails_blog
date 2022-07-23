@@ -10,10 +10,10 @@ class PostsController < ApplicationController
     @post.likes_counter = 0
 
     if @post.save
-      flash[:notice] = "Post created successfully!"
+      flash[:notice] = 'Post created successfully!'
       redirect_to user_post_path(current_user, @post)
     else
-      flash[:error] = "Post creation failed!"
+      flash[:error] = 'Post creation failed!'
       render :new
     end
   end
