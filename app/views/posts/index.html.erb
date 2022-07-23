@@ -1,2 +1,24 @@
 <h1>List of all posts</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<% if @posts.any? %>
+    <%= render 'partials/user_card', user: @posts.first.user %>
+<% else %>
+    <p>This user doesn't have any post yet!</p>
+<% end %>
+
+<div class="posts">
+    <% if @posts.any? %>
+        <% @posts.each do |post| %>
+            <%= render 'partials/post_card', post: post %>
+
+            <% if post.comment.any? %>
+                <% post.comment.each do |comment| %>
+                    <%= render 'partials/comment_card', comment: comment, user: @posts.first.user %>
+                <% end %>
+            <% else %>
+                <p>No comments yet</p>
+            <% end %>
+        <% end %>
+    <% end %>
+</div>
+
+<button class="btn">Pagination</button>

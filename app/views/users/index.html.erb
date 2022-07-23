@@ -1,2 +1,11 @@
-<h1>List of all Users</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<h1 class="page_title">Users List</h1>
+
+<div class="user_wrapper">
+    <% if @users.any? %>
+        <% @users.each do |user| %>
+            <%= render 'partials/user_card', user: user %>
+        <% end %>
+    <% else %>
+        <p>No users yet</p>
+    <% end %>
+</div>

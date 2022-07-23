@@ -1,2 +1,27 @@
-<h1>User Details</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1 class="page_title">User Details</h1>
+<div class="user_wrapper">
+    <img src="<%= @user.photo %>" alt="<%= @user.name %>" />
+    <div>
+        <h2><%= @user.name %></h2>
+        <p>Number of posts: <%= @user.posts_counter %></p>
+    </div>
+
+    <div class="bio">
+        <h3>Bio</h3>
+        <p><%= @user.bio %></p>
+    </div>
+
+    <div class="posts">
+        <h3>Posts</h3>
+        <% if @user.post.any? %>
+            <% @user.post.each do |post| %>
+                <%= render 'partials/post_card', post: post %>
+            <% end %>
+        <% else %>
+            <p>No posts yet</p>
+        <% end %>
+    </div>
+
+    <button class="btn">Load More</button>
+</div>
+
