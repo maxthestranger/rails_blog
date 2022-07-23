@@ -9,12 +9,16 @@ class CommentsController < ApplicationController
     post = Post.find(params[:post_id])
     post_author = post.user
 
-    comment = Comment.new(text: comment_body.permit(:text), user: comment_author, post: post)
+    comment = Comment.new(comment_body.permit(:text))
+    comment.user = comment_author
+    comment.post = post
     return unless comment.save
 
-    respond to do |format|
-      flash[:notice] = "Comment created successfully!"
-      format.html { redirect_to user_post_path(post_author, post) }
+    respond_to do |format|
+      format.html do
+        flash[:notice] = "Comment created successfully!"
+        redirect_to user_post_path(post_author, post)
+      end
     end
   end
 end

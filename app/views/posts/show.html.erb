@@ -10,16 +10,20 @@
         </div>
     </div>
 
+    <%= render 'partials/like_button', like: Like.new, user: @post.user, post: @post %>
+
     <p class="post_content">
         <%= @post.text %>
     </p>
 
     <% if @post.comment.any? %>
         <% @post.comment.each do |comment| %>
-            <%= render 'partials/comment_card', comment: comment, user: @user %>
+            <%= render 'partials/comment_card', comment: comment, user: @post.user %>
         <% end %>
     <% else %>
         <p>No comments yet</p>
     <% end %>
 </div>
 
+<h3>Add new comment:</h3>
+<%= render 'partials/comment_form', comment: Comment.new, user: @post.user, post: @post %>
